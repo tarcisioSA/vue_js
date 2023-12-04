@@ -1,8 +1,14 @@
 <template>
-    <img src="" alt="">
+    <img :src="avatar" :alt="descricao">
 </template>
 <script>
     export default{
-        name: 'Picture'
+        name: 'Picture',
+        data(){
+            return{
+                avatar: "/img/avatar.png",
+                descricao: 'Tarcisio Sousa'
+            }
+        }
     }
 </script>
