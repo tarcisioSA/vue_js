@@ -8,9 +8,15 @@
             <li>Python</li>
             <li>Css</li>
         </ul>
+        <div>
+            <button @click="showEmail">{{textoBotao}}</button>
+        </div>
         <p v-show="mostrar_email">Mande uma mensagem para {{ email }}</p>
         <p>Para acessar meu portifolio <a v-bind:href="meu_link" target="_blank">basta clicar aqui</a></p>
-        <Picture/>
+        <div v-show="foto">
+            <Picture/>
+        </div>
+        <button @click="ocultarFoto">{{ botatoFoto }}</button>
     </div>
 </template>
 <script>
@@ -25,11 +31,35 @@ export default {
 },
     data() {
         return {
+
+            foto: true,
             esta_trabalhando: false,
-            mostrar_email: true,
+            mostrar_email: false,
             email: 'tcisio10@gmail.com',
-            meu_link: 'https://www.google.com'
+            meu_link: 'https://www.google.com',
+            textoBotao: 'Mostrar e-mail',
+            botatoFoto: 'Ocultar foto'
         }
+    },
+    methods: {
+        showEmail(){
+            this.mostrar_email = !this.mostrar_email
+            if(!this.mostrar_email){
+                this.textoBotao = 'Mostrar e-mail'
+            }else{
+                this.textoBotao = 'Ocultar e-mail'
+            }
+        },
+        ocultarFoto(){
+            this.foto = !this.foto
+            if(this.foto){
+                this.botatoFoto = 'Ocultar foto'
+            }else{
+                this.botatoFoto = 'Mostrar foto'
+            }
+        }
+
+      
     }
 
 }
