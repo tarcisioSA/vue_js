@@ -4,6 +4,12 @@
             <h1>Tarcisio</h1>
             <p>Meu nome é {{ nome }} e trabalho como {{ profissao }}</p>
             <multiplosEventos/>
+            <reutilizacao/>
+            <reutilizacao/>
+            <reutilizacao/>
+            <reutilizacao/>
+            <reutilizacao/>
+            <reutilizacao/>
         </div>
         
    
@@ -12,11 +18,14 @@
 <script>
 
 import multiplosEventos from './multiplosEventos.vue';
+import Reutilizacao from './reutilizacao.vue';
+
 
     export default {
         name: 'PrimeiroCompoente',
         components: {
-            multiplosEventos
+            multiplosEventos,
+                Reutilizacao
         },
         data() {
             return {

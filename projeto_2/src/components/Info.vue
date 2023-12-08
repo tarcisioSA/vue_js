@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <p v-if="esta_trabalhando">Estou trabalhando no momento.</p>
         <p v-else>Não estou trabalhando</p>
         <p>Utilizo as seguintes tecnologias para back-end: </p>
@@ -34,13 +35,15 @@ export default {
     Picture,
     
 },
+props:{
+    email: String
+},
     data() {
         return {
 
             foto: true,
             esta_trabalhando: false,
             mostrar_email: false,
-            email: 'tcisio10@gmail.com',
             meu_link: 'https://www.google.com',
             textoBotao: 'Mostrar e-mail',
             botatoFoto: 'Ocultar foto',
