@@ -1,17 +1,24 @@
 <template>
     <div><img :src="avatar" :alt="descricao">
-        <reutilizacao/>
+       <mudar-imagem @mudar-imagem="trocarImagem"/>
     </div>
 </template>
 <script>
-import reutilizacao from './reutilizacao.vue'
+import MudarImagem from './mudarImagem.vue'
+
     export default{
-  components: { reutilizacao },
+  components: {MudarImagem },
         name: 'Picture',
         data(){
             return{
                 avatar: "/img/avatar.png",
+                
                 descricao: 'Tarcisio Sousa'
+            }
+        },
+        methods:{
+            trocarImagem(){
+                this.avatar = '/img/avatar2.png'
             }
         }
     }
