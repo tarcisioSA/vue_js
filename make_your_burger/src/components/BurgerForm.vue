@@ -4,7 +4,7 @@
             componente de mensagem
         </p>
         <div>
-            <form id="burger-form">
+            <form id="burger-form" @submit="createBurger">
                 <div class="input-container">
                     <label for="nome">Nome do cliente:</label>
                     <input type="text" id="nome" name="nome" v-model="nome" placeholder="Digite seu nome">
@@ -45,11 +45,11 @@
     export default{
         name: 'BurgerForm',
         data(){
-            return {
+            return {  //dados dos ingredientes que virão, são os três primeiros dados de cima
                 paes: null,
                 carnes: null,
                 opcionaisdata: null,
-                nome: null,
+                nome: null, //daqui para baixo são os que ser]ao enviados para o servidor
                 pao: null,
                 carne: null,
                 opcionais:[],
@@ -58,20 +58,51 @@
             }
         },
         methods:{
-            async getIngredientes() {
+            async getIngredientes() {  // buscando os dados no servidor
 
             const req = await fetch("http://localhost:3000/ingredientes");                
             const data = await req.json();
-
+                //obtendo os dados do servidor, para depois inserir eles no formulario acima via v-for
             this.paes = data.paes;
             this.carnes = data.carnes;
             this.opcionaisdata = data.opcionais;
 
             console.log(data);
 
+            },
+            async createBurger(e){ //enviado os dados para o servidor
+
+                e.preventDefault();
+                //obtendo a escolha do user para mandar para o dashboard
+                const data = {
+                    nome: this.nome,
+                    carne: this.carne,
+                    pao: this.pao,
+                    opcionais: Array.from(this.opcionais),
+                    status: "Solicitado"
+                }
+
+                const dataJson = JSON.stringify(data);
+
+                //meio utilizado para obter os dados que o user inseriu
+                const req = await fetch("http://localhost:3000/burgers", {
+                    method: "POST",
+                    headers: {"content-Type": "aplication/json"},
+                    body: dataJson
+                });
+
+                const res = await req.json();
+
+                // mensagem do sistema
+
+                // limpar os campos
+                this.nome = '',
+                this.carne = '',
+                this.pao = '',
+                this.opcionais = ''
             }
         },
-        mounted() {
+        mounted() {  //montar
             this.getIngredientes()
         }
     }
