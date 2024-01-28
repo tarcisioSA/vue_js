@@ -1,8 +1,6 @@
 <template>
     <div>
-        <p>
-            componente de mensagem
-        </p>
+       <Message :msg="msg" v-show="msg"/>
         <div>
             <form id="burger-form" @submit="createBurger">
                 <div class="input-container">
@@ -42,70 +40,71 @@
     </div>
 </template>
 <script>
-    export default{
-        name: 'BurgerForm',
-        data(){
-            return {  //dados dos ingredientes que virão, são os três primeiros dados de cima
-                paes: null,
-                carnes: null,
-                opcionaisdata: null,
-                nome: null, //daqui para baixo são os que ser]ao enviados para o servidor
-                pao: null,
-                carne: null,
-                opcionais:[],
-                status: 'Solicitado',
-                msg: null
-            }
-        },
-        methods:{
-            async getIngredientes() {  // buscando os dados no servidor
+import Message from './Message.vue';
 
-            const req = await fetch("http://localhost:3000/ingredientes");                
+    export default{
+    name: 'BurgerForm',
+    data() {
+        return {
+            paes: null,
+            carnes: null,
+            opcionaisdata: null,
+            nome: null, //daqui para baixo são os que ser]ao enviados para o servidor
+            pao: null,
+            carne: null,
+            opcionais: [],
+            status: 'Solicitado',
+            msg: null
+        };
+    },
+    methods: {
+        async getIngredientes() {
+            const req = await fetch("http://localhost:3000/ingredientes");
             const data = await req.json();
-                //obtendo os dados do servidor, para depois inserir eles no formulario acima via v-for
+            //obtendo os dados do servidor, para depois inserir eles no formulario acima via v-for
             this.paes = data.paes;
             this.carnes = data.carnes;
             this.opcionaisdata = data.opcionais;
-
             console.log(data);
+        },
+        async createBurger(e) {
+            e.preventDefault();
+            //obtendo a escolha do user para mandar para o dashboard
+            const data = {
+                nome: this.nome,
+                carne: this.carne,
+                pao: this.pao,
+                opcionais: Array.from(this.opcionais),
+                status: "Solicitado"
+            };
+            const dataJson = JSON.stringify(data);
+            //meio utilizado para obter os dados que o user inseriu
+            const req = await fetch("http://localhost:3000/burgers", {
+                method: "POST",
+                headers: { "content-Type": "aplication/json" },
+                body: dataJson
+            });
+            const res = await req.json();
+            // mensagem do sistema
 
-            },
-            async createBurger(e){ //enviado os dados para o servidor
+            this.msg = `Parabéns ${this.nome}, Pedido de Nº${res.id} Realizado com sucesso`
 
-                e.preventDefault();
-                //obtendo a escolha do user para mandar para o dashboard
-                const data = {
-                    nome: this.nome,
-                    carne: this.carne,
-                    pao: this.pao,
-                    opcionais: Array.from(this.opcionais),
-                    status: "Solicitado"
-                }
+            //limpar mensagem
 
-                const dataJson = JSON.stringify(data);
+            setTimeout(() => this.msg = '', 5000)
 
-                //meio utilizado para obter os dados que o user inseriu
-                const req = await fetch("http://localhost:3000/burgers", {
-                    method: "POST",
-                    headers: {"content-Type": "aplication/json"},
-                    body: dataJson
-                });
-
-                const res = await req.json();
-
-                // mensagem do sistema
-
-                // limpar os campos
-                this.nome = '',
+            // limpar os campos
+            this.nome = '',
                 this.carne = '',
                 this.pao = '',
-                this.opcionais = ''
-            }
-        },
-        mounted() {  //montar
-            this.getIngredientes()
+                this.opcionais = '';
         }
-    }
+    },
+    mounted() {
+        this.getIngredientes();
+    },
+    components: { Message }
+}
 </script>
 
 <style scoped>

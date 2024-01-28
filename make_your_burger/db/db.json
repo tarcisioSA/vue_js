@@ -79,30 +79,15 @@
   ],
   "burgers": [
     {
-      "id": "a5b6",
-      "nome": "Tarcisio",
+      "id": "46d5",
+      "nome": "Lais Sousa",
       "carne": "Maminha",
-      "pao": "3 Queijos",
-      "opcionais": [
-        "Bacon",
-        "Salame",
-        "Cebola roxa",
-        "Pepino",
-        "Tomate",
-        "Cheddar"
-      ],
-      "status": "Solicitado"
-    },
-    {
-      "id": "36b9",
-      "nome": "asd",
-      "carne": "Maminha",
-      "pao": "Italiano Branco",
+      "pao": "Integral",
       "opcionais": [
         "Bacon",
         "Cebola roxa"
       ],
-      "status": "Solicitado"
+      "status": "Em produção"
     }
   ]
 }
