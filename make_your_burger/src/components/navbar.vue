@@ -40,6 +40,7 @@ props: ["logo", "alt"]
         text-decoration: none;
         margin: 12px;
         transition: .5;
+        font-weight: bold;
     }
 
     #nav a:hover {
